@@ -29,8 +29,8 @@ public class DatabaseContract {
         public static final String COLUMN_COURSE_INST_ID = "course_id";
         public static final String COLUMN_COURSE_ENGAGED_LECTURES = "lectures_engaged";
         public static final String COLUMN_COURSE_ATTENDED_LECTURES = "lectures_attended";
-        public static final String COLUMN_COURSE_ABSENT_LECTURES = "lectures_absent";
         public static final String COLUMN_COURSE_MAX_LECTURES = "max_lectures";
+        public static final String COLUMN_COURSE_MIN_ATTENDANCE = "min_attendance";
 
     }
 
