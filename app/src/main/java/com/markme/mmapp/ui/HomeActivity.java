@@ -5,17 +5,11 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.markme.mmapp.R;
 
@@ -26,6 +20,7 @@ public class HomeActivity extends AppCompatActivity {
     private FloatingActionButton addButton;
     private TabLayout tabLayout;
     private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,19 +28,22 @@ public class HomeActivity extends AppCompatActivity {
         init_instances();
     }
 
-    private void init_instances(){
-        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+    private void init_instances() {
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Summary"));
         tabLayout.addTab(tabLayout.newTab().setText("Time Table"));
         tabLayout.addTab(tabLayout.newTab().setText("Courses"));
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
+        viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager(), HomeActivity.this));
+        tabLayout.setupWithViewPager(viewPager);
         setSupportActionBar(toolbar);
-        rootLayout = (CoordinatorLayout)findViewById(R.id.rootLayout);
-        addButton = (FloatingActionButton)findViewById(R.id.addButton);
+        rootLayout = (CoordinatorLayout) findViewById(R.id.rootLayout);
+        addButton = (FloatingActionButton) findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(rootLayout,"Hello Raghav!!",Snackbar.LENGTH_SHORT)
+                Snackbar.make(rootLayout, "Hello Raghav!!", Snackbar.LENGTH_SHORT)
                         .setAction("Okay!!", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
