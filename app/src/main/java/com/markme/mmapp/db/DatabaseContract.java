@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
  */
 public class DatabaseContract {
 
-    public static final String CONTENT_AUTHORITY = "com.markme.mmapp.dataprovider";
+    public static final String CONTENT_AUTHORITY = "com.markme.mmapp.db.DatabaseProvider";
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 

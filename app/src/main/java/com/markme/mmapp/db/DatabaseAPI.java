@@ -7,8 +7,11 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.util.Log;
 
+import com.markme.mmapp.data.Course;
 import com.markme.mmapp.db.DatabaseContract.CourseTable;
 import com.markme.mmapp.db.DatabaseContract.LectureTable;
+
+import java.util.ArrayList;
 
 /**
  * Created by raghav on 14/10/15.
@@ -167,6 +170,32 @@ public class DatabaseAPI {
             engagedLectures = 0;
         cursor.close();
         return engagedLectures;
+    }
+
+    public ArrayList<Course> getAllCourses(){
+
+        ArrayList<Course> allCourses = new ArrayList<Course>();
+
+        Cursor cursor = this.mContext.getContentResolver().query(
+                CourseTable.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        if(cursor != null)
+            while(cursor.moveToNext()){
+                String id = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_INST_ID));
+                String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
+                int max = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_MAX_LECTURES));
+                int engaged = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_ENGAGED_LECTURES));
+                int attended = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_ATTENDED_LECTURES));
+                Course course = new Course(id, name, max, engaged, attended);
+                allCourses.add(course);
+            }
+
+        return allCourses;
     }
 
 

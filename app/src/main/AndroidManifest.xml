@@ -16,6 +16,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.NewCourseActivity"
+            android:label="@string/add_new_course"
+            android:parentActivityName=".ui.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.HomeActivity" />
+        </activity>
+
+        <provider
+            android:name="com.markme.mmapp.db.DatabaseProvider"
+            android:authorities="com.markme.mmapp.db.DatabaseProvider"
+            android:exported="true" >
+        </provider>
     </application>
 
 </manifest>

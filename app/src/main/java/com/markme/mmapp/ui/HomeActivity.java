@@ -1,9 +1,9 @@
 package com.markme.mmapp.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Time Table"));
         tabLayout.addTab(tabLayout.newTab().setText("Courses"));
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
+        final ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
         viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager(), HomeActivity.this));
         tabLayout.setupWithViewPager(viewPager);
         setSupportActionBar(toolbar);
@@ -43,13 +43,12 @@ public class HomeActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(rootLayout, "Hello Raghav!!", Snackbar.LENGTH_SHORT)
-                        .setAction("Okay!!", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
 
-                            }
-                        }).show();
+                int pageNum = viewPager.getCurrentItem();
+                if(pageNum == 2){
+                    Intent newCourseIntent = new Intent(HomeActivity.this, NewCourseActivity.class);
+                    startActivity(newCourseIntent);
+                }
             }
         });
     }

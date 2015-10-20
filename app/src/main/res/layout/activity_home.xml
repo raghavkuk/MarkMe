@@ -39,7 +39,9 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/fab_margin_bottom"
         android:layout_marginRight="@dimen/fab_margin_right"
-        app:backgroundTint="@color/color_fab"
-        android:src="@drawable/ic_crossmark"
-        app:fabSize="normal" />
+        app:backgroundTint="#7B1FA2"
+        android:src="@drawable/plus_icon"
+        app:fabSize="normal"
+        android:clickable="true"
+        app:borderWidth="0dp"/>
 </android.support.design.widget.CoordinatorLayout>
