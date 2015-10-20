@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.markme.mmapp.R;
+import com.markme.mmapp.data.Course;
 import com.markme.mmapp.db.DatabaseAPI;
 
 
@@ -19,6 +20,8 @@ public class NewCourseActivity extends AppCompatActivity {
     EditText courseName;
     EditText engagedLectures;
     EditText attendedLectures;
+    EditText maxLectures;
+    EditText minAttendance;
     Button saveButton;
     DatabaseAPI dbApi;
 
@@ -41,13 +44,17 @@ public class NewCourseActivity extends AppCompatActivity {
         courseName = (EditText) findViewById(R.id.new_course_name);
         engagedLectures = (EditText) findViewById(R.id.new_course_engaged_lectures);
         attendedLectures = (EditText) findViewById(R.id. new_course_attended_lectures);
+        maxLectures = (EditText) findViewById(R.id.new_course_max_lectures);
+        minAttendance = (EditText) findViewById(R.id. new_course_min_attendance);
         saveButton = (Button) findViewById(R.id.save_new_course_button);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbApi.addCourse(courseName.getText().toString(), courseId.getText().toString(), Integer.valueOf(engagedLectures.getText().toString()),
-                        Integer.valueOf(attendedLectures.getText().toString()), 0, 0);
+                Course newCourse = new Course(courseName.getText().toString(), courseId.getText().toString(), Integer.valueOf(engagedLectures.getText().toString()),
+                        Integer.valueOf(attendedLectures.getText().toString()), Integer.valueOf(maxLectures.getText().toString()), Integer.valueOf(minAttendance.getText().toString()));
+                dbApi.addCourse(newCourse);
+                NewCourseActivity.this.finish();
             }
         });
 

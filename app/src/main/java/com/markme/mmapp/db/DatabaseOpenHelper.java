@@ -35,7 +35,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 LectureTable.COLUMN_LECTURE_COURSE_NAME + " TEXT NOT NULL, " + //lecture course name
                 LectureTable.COLUMN_LECTURE_START_TIME + " TEXT NOT NULL, " + //lecture start time
                 LectureTable.COLUMN_LECTURE_END_TIME + " TEXT NOT NULL, " + //lecture end time
-                LectureTable.COLUMN_LECTURE_DAY + " TEXT NOT NULL, " + //lectures not attended
+                LectureTable.COLUMN_LECTURE_DAY + " INTEGER NOT NULL, " + //lectures not attended
                 LectureTable.COLUMN_LECTURE_LOCATION + " TEXT" + //max lectures
                 ");";
 

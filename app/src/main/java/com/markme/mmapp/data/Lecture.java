@@ -5,15 +5,17 @@ public class Lecture {
     private String courseName;
     private String startTime;
     private String endTime;
-    private String day;
+    private int day;
+    private String location;
 
     public Lecture(String courseId,
-                   String courseName, String startTime, String endTime, String day){
+                   String courseName, String startTime, String endTime, int day, String location){
         this.courseId = courseId;
         this.courseName = courseName;
         this.startTime = startTime;
         this.endTime = endTime;
         this.day = day;
+        this.location = location;
     }
 
 
@@ -33,7 +35,11 @@ public class Lecture {
         return endTime;
     }
 
-    public String getDay() {
+    public int getDay() {
         return day;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }

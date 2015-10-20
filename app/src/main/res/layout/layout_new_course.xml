@@ -1,115 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E1BEE7"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/new_course_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/new_course_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="5dp">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/new_course_id_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Course ID:"
-            android:layout_centerVertical="true"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/new_course_id"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/new_course_id_label" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp">
 
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/new_course_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Course ID" />
+            </android.support.design.widget.TextInputLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="5dp">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp">
 
-        <TextView
-            android:id="@+id/new_course_name_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Course Name:"
-            android:layout_centerVertical="true"/>
+                <EditText
+                    android:id="@+id/new_course_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Course Name" />
+            </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/new_course_name"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/new_course_name_label"/>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp">
 
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/new_course_engaged_lectures"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Engaged Lectures" />
+            </android.support.design.widget.TextInputLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="5dp">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp">
 
-        <TextView
-            android:id="@+id/new_course_engaged_lectures_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lectures Engaged:"
-            android:layout_centerVertical="true"/>
+                <EditText
+                    android:id="@+id/new_course_attended_lectures"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Engaged Lectures" />
+            </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/new_course_engaged_lectures"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/new_course_engaged_lectures_label"/>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp">
 
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/new_course_max_lectures"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Max. Lectures" />
+            </android.support.design.widget.TextInputLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="5dp">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp">
 
-        <TextView
-            android:id="@+id/new_course_attended_lectures_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lectures Attended:"
-            android:layout_centerVertical="true"/>
+                <EditText
+                    android:id="@+id/new_course_min_attendance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Min. Attendance Required" />
+            </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/new_course_attended_lectures"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/new_course_attended_lectures_label"/>
+            <Button
+                android:id="@+id/save_new_course_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Save" />
 
-    </RelativeLayout>
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/save_new_course_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:layout_gravity="center_horizontal"/>
-
+    </ScrollView>
 
 </LinearLayout>
