@@ -188,7 +188,8 @@ public class DatabaseAPI {
                 int max = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_MAX_LECTURES));
                 int engaged = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_ENGAGED_LECTURES));
                 int attended = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_ATTENDED_LECTURES));
-                Course course = new Course(id, name, max, engaged, attended);
+                int minimum = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_MIN_ATTENDANCE));
+                Course course = new Course(id, name, max, engaged, attended,minimum);
                 allCourses.add(course);
             }
 
