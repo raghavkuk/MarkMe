@@ -59,9 +59,7 @@ public class SummaryFragment extends Fragment {
 
         @Override
         protected ArrayList<Course> doInBackground(Void... voids) {
-            // courseData.addAll(null);
-            //TODO: Database API for all courses
-            return courseData;
+            return databaseAPI.getAllCourses();
         }
 
         @Override
