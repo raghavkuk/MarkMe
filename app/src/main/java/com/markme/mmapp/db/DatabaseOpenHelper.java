@@ -6,9 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.markme.mmapp.db.DatabaseContract.CourseTable;
 import com.markme.mmapp.db.DatabaseContract.LectureTable;
 
-/**
- * Created by raghav on 14/10/15.
- */
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;

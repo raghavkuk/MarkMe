@@ -7,12 +7,12 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.util.Log;
 
+import com.markme.mmapp.data.Course;
 import com.markme.mmapp.db.DatabaseContract.CourseTable;
 import com.markme.mmapp.db.DatabaseContract.LectureTable;
 
-/**
- * Created by raghav on 14/10/15.
- */
+import java.util.ArrayList;
+
 public class DatabaseAPI {
 
     private Context mContext;

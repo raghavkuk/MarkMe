@@ -4,9 +4,6 @@ import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-/**
- * Created by raghav on 14/10/15.
- */
 public class DatabaseContract {
 
     public static final String CONTENT_AUTHORITY = "com.markme.mmapp.dataprovider";
