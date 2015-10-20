@@ -263,15 +263,15 @@ public class DatabaseAPI {
         return result;
     }
 
-    public ArrayList<Lecture> getAllLectures(Course course, int mDay){
+    public ArrayList<Lecture> getAllLectures(int mDay){
 
         ArrayList<Lecture> allLectures = new ArrayList<Lecture>();
 
         Cursor cursor = this.mContext.getContentResolver().query(
                 LectureTable.CONTENT_URI,
                 null,
-                LectureTable.COLUMN_LECTURE_COURSE_ID + "=? and " + LectureTable.COLUMN_LECTURE_DAY + "=?",
-                new String[]{course.getCourseId(), String.valueOf(mDay)},
+                LectureTable.COLUMN_LECTURE_DAY + "=?",
+                new String[]{String.valueOf(mDay)},
                 null
         );
 

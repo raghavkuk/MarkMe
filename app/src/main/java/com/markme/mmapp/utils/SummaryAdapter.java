@@ -1,4 +1,4 @@
-package com.markme.mmapp.ui;
+package com.markme.mmapp.utils;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -36,8 +36,8 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.SummaryV
         holder.courseIdView.setText(course.getCourseId());
         holder.lecturesAttendedView.setText(course.getLecturesAttended()+"");
         holder.lecturesEngagedView.setText(course.getLecturesEngaged()+"");
-        double percentAttendance = (course.getLecturesAttended()/course.getLecturesEngaged())*100;
-        percentAttendance = Math.round(percentAttendance*100)/100;
+        double percentAttendance = ((double)course.getLecturesAttended()/course.getLecturesEngaged())*100;
+        percentAttendance = ((double)Math.round(percentAttendance*100))/100;
         if(percentAttendance >= course.getMinAttendance()){
             holder.percentageAttendanceView.setTextColor(Color.GREEN);
         } else {

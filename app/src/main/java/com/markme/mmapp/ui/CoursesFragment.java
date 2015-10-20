@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 
 import com.markme.mmapp.R;
 import com.markme.mmapp.db.DatabaseAPI;
+import com.markme.mmapp.utils.CoursesAdapter;
 
-/**
- * Created by raghav on 18/10/15.
- */
 public class CoursesFragment extends Fragment {
 
     DatabaseAPI dbApi;

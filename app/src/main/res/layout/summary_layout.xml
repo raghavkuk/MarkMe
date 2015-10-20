@@ -3,28 +3,43 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     card_view:elevation = "3dp"
     card_view:cardCornerRadius = "2dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginRight="2dp"
+    android:layout_marginLeft="2dp"
+    android:background="@android:color/transparent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 <LinearLayout
+    android:paddingBottom="5dp"
+    android:background="@android:color/white"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
+        android:padding="2dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/courseIdView"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/courseNameView"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
+        android:padding="2dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -32,33 +47,51 @@
             android:orientation="vertical"
             android:layout_weight="2"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:orientation="horizontal"
+                android:layout_marginBottom="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
-                android:text="Attended:"
+                android:text="Attended"
+                android:textSize="15sp"
+                android:gravity="center_horizontal"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
+                <View
+                    android:background="@android:color/black"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
             <TextView
                 android:id="@+id/lecturesAttendedView"
+                android:textSize="15sp"
+                android:gravity="center_horizontal"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
+                android:layout_marginBottom="2dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:text="Engaged:"
+                    android:text="Engaged"
+                    android:textSize="15sp"
+                    android:gravity="center_horizontal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
+                <View
+                    android:background="@android:color/black"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"/>
                 <TextView
                     android:id="@+id/lecturesEngagedView"
+                    android:textSize="15sp"
+                    android:gravity="center_horizontal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
@@ -66,6 +99,9 @@
         </LinearLayout>
         <TextView
             android:id="@+id/percentageAttendanceView"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="25sp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />

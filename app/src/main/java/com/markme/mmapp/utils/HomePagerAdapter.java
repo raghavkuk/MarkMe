@@ -1,9 +1,13 @@
-package com.markme.mmapp.ui;
+package com.markme.mmapp.utils;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.markme.mmapp.ui.CoursesFragment;
+import com.markme.mmapp.ui.SummaryFragment;
+import com.markme.mmapp.ui.TimeTableFragment;
 
 /**
  * Created by raghav on 18/10/15.

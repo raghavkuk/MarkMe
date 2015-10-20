@@ -1,4 +1,4 @@
-package com.markme.mmapp.ui;
+package com.markme.mmapp.utils;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,22 +13,18 @@ import com.markme.mmapp.data.Course;
 
 import java.util.List;
 
-/**
- * Created by raghav on 18/10/15.
- */
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CourseViewHolder> {
 
     List<Course> courses;
 
-    CoursesAdapter(List<Course> courses){
+    public CoursesAdapter(List<Course> courses){
         this.courses = courses;
     }
 
     @Override
     public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_card_view, parent, false);
-        CourseViewHolder courseViewHolder = new CourseViewHolder(view);
-        return courseViewHolder;
+        return new CourseViewHolder(view);
     }
 
     @Override

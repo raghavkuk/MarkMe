@@ -5,11 +5,13 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.markme.mmapp.R;
 import com.markme.mmapp.data.Lecture;
 import com.markme.mmapp.db.DatabaseAPI;
+import com.markme.mmapp.utils.LectureAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,8 +62,15 @@ public class TimeTableFragment extends Fragment {
         progressBar = (ProgressBar)rootView.findViewById(R.id.progress);
         lectureRecyclerView = (RecyclerView)rootView.findViewById(R.id.lectureRecyclerView);
         spinner = (Spinner)rootView.findViewById(R.id.daySpinner);
+        ArrayAdapter<String> spinnerAdapter =
+                new ArrayAdapter<>(activity,
+                        android.R.layout.simple_spinner_dropdown_item,
+                         getResources().getStringArray(R.array.five_day_array));
+        spinner.setAdapter(spinnerAdapter);
         lectureArrayList = new ArrayList<>();
         lectureAdapter = new LectureAdapter(activity, lectureArrayList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+        lectureRecyclerView.setLayoutManager(layoutManager);
         lectureRecyclerView.setAdapter(lectureAdapter);
         textView = (TextView)rootView.findViewById(R.id.labelTextView);
     }
@@ -103,15 +113,13 @@ public class TimeTableFragment extends Fragment {
 
         @Override
         protected ArrayList<Lecture> doInBackground(Integer... integers) {
-            // TODO: call database API to retrieve all lectures on a particular day
-            return null;
+            return databaseAPI.getAllLectures(integers[0]);
         }
 
         @Override
         protected void onPostExecute(ArrayList<Lecture> lectures) {
             if(lectures == null || lectures.size() == 0){
                 textView.setVisibility(View.VISIBLE);
-                textView.setText("No Lectures Added, Please Add Some Lectures for this Day or choose Another Day");
             } else {
                 lectureArrayList.clear();
                 lectureArrayList.addAll(lectures);

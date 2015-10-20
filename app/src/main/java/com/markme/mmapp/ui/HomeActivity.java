@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.markme.mmapp.R;
+import com.markme.mmapp.utils.HomePagerAdapter;
 
 
 public class HomeActivity extends AppCompatActivity {

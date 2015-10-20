@@ -1,4 +1,4 @@
-package com.markme.mmapp.ui;
+package com.markme.mmapp.utils;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
