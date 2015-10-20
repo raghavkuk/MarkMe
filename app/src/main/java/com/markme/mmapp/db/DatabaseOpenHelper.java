@@ -26,7 +26,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 CourseTable.COLUMN_COURSE_ENGAGED_LECTURES + " INTEGER DEFAULT(0), " + //engaged lectures
                 CourseTable.COLUMN_COURSE_ATTENDED_LECTURES + " INTEGER DEFAULT(0), " + //attended lectures
                 CourseTable.COLUMN_COURSE_MAX_LECTURES + " INTEGER DEFAULT(0), " + //max lectures
-                CourseTable.COLUMN_COURSE_MIN_ATTENDANCE + " INTEGER DEFAULT(0)" + //min attendance
+                CourseTable.COLUMN_COURSE_MIN_ATTENDANCE + " FLOAT(5,2) DEFAULT(0)" + //min attendance
                 ");";
 
         final String SQL_CREATE_LECTURE_TABLE = "CREATE TABLE IF NOT EXISTS " + LectureTable.TABLE_NAME + " (" +

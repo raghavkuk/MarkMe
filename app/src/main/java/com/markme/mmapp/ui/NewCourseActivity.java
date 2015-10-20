@@ -51,8 +51,8 @@ public class NewCourseActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Course newCourse = new Course(courseName.getText().toString(), courseId.getText().toString(), Integer.valueOf(engagedLectures.getText().toString()),
-                        Integer.valueOf(attendedLectures.getText().toString()), Integer.valueOf(maxLectures.getText().toString()), Integer.valueOf(minAttendance.getText().toString()));
+                Course newCourse = new Course(courseId.getText().toString(), courseName.getText().toString(), Integer.valueOf(maxLectures.getText().toString()),
+                        Integer.valueOf(engagedLectures.getText().toString()), Integer.valueOf(attendedLectures.getText().toString()), Double.valueOf(minAttendance.getText().toString()));
                 dbApi.addCourse(newCourse);
                 NewCourseActivity.this.finish();
             }

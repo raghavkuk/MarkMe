@@ -10,12 +10,13 @@ public class Course {
     private double minAttendance;
 
     public Course(String courseId, String courseName,
-                  int totalLectures, int lecturesEngaged, int lecturesAttended, int minAttendance){
+                  int totalLectures, int lecturesEngaged, int lecturesAttended, double minAttendance){
         this.courseId = courseId;
         this.courseName = courseName;
         this.totalLectures = totalLectures;
         this.lecturesEngaged = lecturesEngaged;
         this.lecturesAttended = lecturesAttended;
+        this.minAttendance = minAttendance;
     }
 
 
