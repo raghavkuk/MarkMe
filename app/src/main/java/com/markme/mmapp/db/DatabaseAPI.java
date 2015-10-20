@@ -13,9 +13,6 @@ import com.markme.mmapp.db.DatabaseContract.LectureTable;
 
 import java.util.ArrayList;
 
-/**
- * Created by raghav on 14/10/15.
- */
 public class DatabaseAPI {
 
     private Context mContext;

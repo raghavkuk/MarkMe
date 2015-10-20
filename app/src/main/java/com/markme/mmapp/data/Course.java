@@ -1,17 +1,16 @@
 package com.markme.mmapp.data;
 
-/**
- * Created by raghav on 18/10/15.
- */
+
 public class Course {
     private String courseId;
     private String courseName;
     private int totalLectures;
     private int lecturesEngaged;
     private int lecturesAttended;
+    private double minAttendance;
 
     public Course(String courseId, String courseName,
-                  int totalLectures, int lecturesEngaged, int lecturesAttended){
+                  int totalLectures, int lecturesEngaged, int lecturesAttended, int minAttendance){
         this.courseId = courseId;
         this.courseName = courseName;
         this.totalLectures = totalLectures;
@@ -38,5 +37,9 @@ public class Course {
 
     public int getLecturesAttended() {
         return lecturesAttended;
+    }
+
+    public double getMinAttendance() {
+        return minAttendance;
     }
 }
