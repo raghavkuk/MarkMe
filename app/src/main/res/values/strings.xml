@@ -36,4 +36,5 @@
         <item>Time Table</item>
         <item>Courses</item>
     </string-array>
+    <string name="title_activity_new_lecture">New Lecture</string>
 </resources>

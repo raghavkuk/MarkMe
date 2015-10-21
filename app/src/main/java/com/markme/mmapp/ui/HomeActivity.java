@@ -17,11 +17,18 @@ import android.view.View;
 import com.markme.mmapp.R;
 import com.markme.mmapp.utils.HomePagerAdapter;
 
+import java.util.Calendar;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
+
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener,
+                                                                    ViewPager.OnPageChangeListener{
 
     public static final int CALL_COURSE_INSERT = 315;
     public static final int CALL_LECTURE_INSERT = 813;
+
+    public static final int RESULT_NO_COURSE = -872;
+
+    public static final String DAY_OF_WEEK = "dayOfWeek";
     private CoordinatorLayout rootLayout;
     private ViewPager viewPager;
     private Fragment[] pagerFragments;
@@ -92,23 +99,61 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                                         ,Snackbar.LENGTH_SHORT).show();
                 }
                 break;
-            case CALL_LECTURE_INSERT:break;
+            case CALL_LECTURE_INSERT:
+                if(resultCode == RESULT_OK){
+                    if(pagerFragments[1] instanceof TimeTableFragment){
+                        TimeTableFragment timeTableFragment = (TimeTableFragment)pagerFragments[2];
+                        timeTableFragment.changeSpinnerDay(data.getIntExtra(DAY_OF_WEEK, Calendar.MONDAY));
+                    }
+                    Snackbar.make(rootLayout,
+                            "Lecture Inserted Successfully"
+                            ,Snackbar.LENGTH_SHORT).show();
+                } else if(resultCode == RESULT_NO_COURSE) {
+
+                    Snackbar.make(rootLayout,
+                            "Please Insert A Course First"
+                            ,Snackbar.LENGTH_SHORT).show();
+
+                } else {
+                        Snackbar.make(rootLayout,
+                                "Unable To Insert Lecture"
+                                ,Snackbar.LENGTH_SHORT).show();
+                    }break;
+                }
+
         }
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
-
     }
 
     @Override
     public void onClick(View view) {
         int pageNum = viewPager.getCurrentItem();
         if (pageNum == 2) {
-            Intent newCourseIntent = new Intent(HomeActivity.this, NewCourseActivity.class);
+            Intent newCourseIntent = new Intent(this, NewCourseActivity.class);
             startActivityForResult(newCourseIntent, CALL_COURSE_INSERT);
+        } else if(pageNum == 1) {
+            Intent newLectureIntent = new Intent(this, NewLectureActivity.class);
+            startActivityForResult(newLectureIntent, CALL_LECTURE_INSERT);
         }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

@@ -2,6 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/courseRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -129,13 +130,14 @@
 
             <Button
                 android:id="@+id/save_new_course_button"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:paddingTop="7dp"
                 android:paddingBottom="7dp"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_fab"
                 android:background="@drawable/button_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

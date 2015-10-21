@@ -2,12 +2,14 @@ package com.markme.mmapp.ui;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.markme.mmapp.R;
@@ -20,6 +22,8 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
     private EditText courseId, courseName, engagedLectures,
                                                     attendedLectures, maxLectures, minAttendance;
     private Button saveButton;
+
+    private LinearLayout rootLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initializeAllViews(){
+        rootLayout = (LinearLayout) findViewById(R.id.courseRootLayout);
         courseId = (EditText) findViewById(R.id.new_course_id);
         courseName = (EditText) findViewById(R.id.new_course_name);
         engagedLectures = (EditText) findViewById(R.id.new_course_engaged_lectures);
@@ -159,9 +164,7 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void createSnackBar(){
-        Toast.makeText(this,"Course with this ID already exists",Toast.LENGTH_SHORT).show();
-        //TODO: Replace with Snackbar
-        //TODO: change hint color
+        Snackbar.make(rootLayout, "Course Already Present, Please Enter a different Value", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

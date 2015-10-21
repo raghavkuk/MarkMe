@@ -48,6 +48,7 @@ public class TimeTableFragment extends Fragment {
         initializeAllViews(rootView);
         setSpinnerListener();
         int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        spinner.setSelection(day - Calendar.MONDAY);
         loadListBasedOnDay(day);
         return rootView;
     }
@@ -66,7 +67,7 @@ public class TimeTableFragment extends Fragment {
         spinner = (Spinner)rootView.findViewById(R.id.daySpinner);
         ArrayAdapter<String> spinnerAdapter =
                 new ArrayAdapter<>(activity,
-                        android.R.layout.simple_spinner_dropdown_item,
+                        R.layout.spinner_layout,
                          getResources().getStringArray(R.array.five_day_array));
         spinner.setAdapter(spinnerAdapter);
 
@@ -85,7 +86,7 @@ public class TimeTableFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i != lastPosition) {
-                    loadListBasedOnDay(i);
+                    loadListBasedOnDay(i+Calendar.MONDAY); // Monday = 2
                 }
             }
 
@@ -98,7 +99,12 @@ public class TimeTableFragment extends Fragment {
 
     private void loadListBasedOnDay(int day){
         LoadLecturesTask loadLecturesTask = new LoadLecturesTask(activity);
-        loadLecturesTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,day);
+        loadLecturesTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, day);
+    }
+
+    public void changeSpinnerDay(int day){
+        spinner.setSelection(day);
+        loadListBasedOnDay(day);
     }
 
     private class LoadLecturesTask extends AsyncTask<Integer,Void,ArrayList<Lecture>>{
