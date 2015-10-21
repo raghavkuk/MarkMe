@@ -1,10 +1,13 @@
 package com.markme.mmapp.ui;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,43 +18,82 @@ import com.markme.mmapp.R;
 import com.markme.mmapp.utils.HomePagerAdapter;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
+    public static final int CALL_COURSE_INSERT = 315;
+    public static final int CALL_LECTURE_INSERT = 813;
     private CoordinatorLayout rootLayout;
-    private FloatingActionButton addButton;
-    private TabLayout tabLayout;
-    private Toolbar toolbar;
+    private ViewPager viewPager;
+    private Fragment[] pagerFragments;
+    private String[] titles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init_stringArray();
+        init_fragments();
         setContentView(R.layout.activity_home);
         init_instances();
     }
 
-    private void init_instances() {
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Summary"));
-        tabLayout.addTab(tabLayout.newTab().setText("Time Table"));
-        tabLayout.addTab(tabLayout.newTab().setText("Courses"));
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        final ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
-        viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager(), HomeActivity.this));
-        tabLayout.setupWithViewPager(viewPager);
-        setSupportActionBar(toolbar);
-        rootLayout = (CoordinatorLayout) findViewById(R.id.rootLayout);
-        addButton = (FloatingActionButton) findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    private void init_stringArray(){
+        titles = getResources().getStringArray(R.array.titles);
+    }
 
-                int pageNum = viewPager.getCurrentItem();
-                if(pageNum == 2){
-                    Intent newCourseIntent = new Intent(HomeActivity.this, NewCourseActivity.class);
-                    startActivity(newCourseIntent);
+    private void init_fragments(){
+        SummaryFragment summaryFragment = new SummaryFragment();
+        TimeTableFragment timeTableFragment = new TimeTableFragment();
+        CoursesFragment coursesFragment = new CoursesFragment();
+
+        pagerFragments = new Fragment[3];
+        pagerFragments[0] = summaryFragment;
+        pagerFragments[1] = timeTableFragment;
+        pagerFragments[2] = coursesFragment;
+    }
+
+    private void init_instances() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        for (String string:titles){
+            tabLayout.addTab(tabLayout.newTab().setText(string));
+        }
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        viewPager = (ViewPager)findViewById(R.id.viewPager);
+        viewPager.setAdapter(
+                new HomePagerAdapter(getSupportFragmentManager(), pagerFragments, titles));
+        tabLayout.setupWithViewPager(viewPager);
+
+
+        rootLayout = (CoordinatorLayout) findViewById(R.id.rootLayout);
+
+        FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.addButton);
+        addButton.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case CALL_COURSE_INSERT:
+                if(resultCode == RESULT_OK){
+                    if(pagerFragments[2] instanceof CoursesFragment){
+                        CoursesFragment coursesFragment = (CoursesFragment)pagerFragments[2];
+                        coursesFragment.getData();
+                    }
+                    Snackbar.make(rootLayout,
+                            "Course Inserted Successfully"
+                                        ,Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(rootLayout,
+                            "Unable To Insert Course"
+                                        ,Snackbar.LENGTH_SHORT).show();
                 }
-            }
-        });
+                break;
+            case CALL_LECTURE_INSERT:break;
+        }
     }
 
     @Override
@@ -59,5 +101,14 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        int pageNum = viewPager.getCurrentItem();
+        if (pageNum == 2) {
+            Intent newCourseIntent = new Intent(HomeActivity.this, NewCourseActivity.class);
+            startActivityForResult(newCourseIntent, CALL_COURSE_INSERT);
+        }
     }
 }

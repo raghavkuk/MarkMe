@@ -60,18 +60,23 @@ public class TimeTableFragment extends Fragment {
 
     private void initializeAllViews(View rootView){
         progressBar = (ProgressBar)rootView.findViewById(R.id.progress);
+
         lectureRecyclerView = (RecyclerView)rootView.findViewById(R.id.lectureRecyclerView);
+
         spinner = (Spinner)rootView.findViewById(R.id.daySpinner);
         ArrayAdapter<String> spinnerAdapter =
                 new ArrayAdapter<>(activity,
                         android.R.layout.simple_spinner_dropdown_item,
                          getResources().getStringArray(R.array.five_day_array));
         spinner.setAdapter(spinnerAdapter);
+
         lectureArrayList = new ArrayList<>();
-        lectureAdapter = new LectureAdapter(activity, lectureArrayList);
+        lectureAdapter = new LectureAdapter(lectureArrayList);
+        lectureRecyclerView.setAdapter(lectureAdapter);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
         lectureRecyclerView.setLayoutManager(layoutManager);
-        lectureRecyclerView.setAdapter(lectureAdapter);
+
         textView = (TextView)rootView.findViewById(R.id.labelTextView);
     }
 
@@ -90,7 +95,6 @@ public class TimeTableFragment extends Fragment {
             }
         });
     }
-
 
     private void loadListBasedOnDay(int day){
         LoadLecturesTask loadLecturesTask = new LoadLecturesTask(activity);

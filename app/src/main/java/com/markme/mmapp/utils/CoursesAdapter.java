@@ -11,19 +11,20 @@ import android.widget.TextView;
 import com.markme.mmapp.R;
 import com.markme.mmapp.data.Course;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CourseViewHolder> {
 
-    List<Course> courses;
+    private ArrayList<Course> courses;
 
-    public CoursesAdapter(List<Course> courses){
+    public CoursesAdapter(ArrayList<Course> courses){
         this.courses = courses;
     }
 
     @Override
     public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_card_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_card_view,
+                                                                                    parent, false);
         return new CourseViewHolder(view);
     }
 
@@ -40,10 +41,6 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CourseVi
         return courses.size();
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
 
     public static class CourseViewHolder extends RecyclerView.ViewHolder{
 

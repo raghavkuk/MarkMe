@@ -30,4 +30,10 @@
         <item>Thursday</item>
         <item>Friday</item>
     </string-array>
+
+    <string-array name="titles">
+        <item>Summary</item>
+        <item>Time Table</item>
+        <item>Courses</item>
+    </string-array>
 </resources>

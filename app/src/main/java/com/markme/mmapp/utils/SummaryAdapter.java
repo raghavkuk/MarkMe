@@ -1,9 +1,7 @@
 package com.markme.mmapp.utils;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +14,16 @@ import java.util.ArrayList;
 
 public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.SummaryViewHolder>{
 
-    private Context context;
     private ArrayList<Course> courses;
-    public SummaryAdapter(Context context, ArrayList<Course> courses){
-        this.context = context;
+    public SummaryAdapter(ArrayList<Course> courses){
         this.courses = courses;
     }
 
 
     @Override
     public SummaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.summary_layout,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.summary_layout,
+                                                                                      parent,false);
         return new SummaryViewHolder(itemView);
     }
 
@@ -37,14 +34,20 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.SummaryV
         holder.courseIdView.setText(course.getCourseId());
         holder.lecturesAttendedView.setText(course.getLecturesAttended()+"");
         holder.lecturesEngagedView.setText(course.getLecturesEngaged()+"");
-        double percentAttendance = ((double)course.getLecturesAttended()/course.getLecturesEngaged())*100;
-        percentAttendance = ((double)Math.round(percentAttendance*100))/100;
-        if(percentAttendance >= course.getMinAttendance()){
-            holder.percentageAttendanceView.setTextColor(Color.GREEN);
+        if(course.getLecturesEngaged() > 0){
+            double percentAttendance = ((double)course.getLecturesAttended()/course.getLecturesEngaged())*100;
+            percentAttendance = ((double)Math.round(percentAttendance*100))/100;
+            if(percentAttendance >= course.getMinAttendance()){
+                holder.percentageAttendanceView.setTextColor(Color.GREEN);
+            } else {
+                holder.percentageAttendanceView.setTextColor(Color.RED);
+            }
+            holder.percentageAttendanceView.setText(percentAttendance+"%");
         } else {
-            holder.percentageAttendanceView.setTextColor(Color.RED);
+            holder.percentageAttendanceView.setTextColor(Color.BLUE);
+            holder.percentageAttendanceView.setText("N.A.");
         }
-        holder.percentageAttendanceView.setText(percentAttendance+"%");
+
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.markme.mmapp.utils;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +13,17 @@ import java.util.ArrayList;
 
 public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.LectureViewHolder>{
 
-    private Context context;
     private ArrayList<Lecture> lectureArrayList;
 
-    public LectureAdapter(Context context, ArrayList<Lecture> lectureArrayList){
-        this.context = context;
+    public LectureAdapter(ArrayList<Lecture> lectureArrayList){
         this.lectureArrayList = lectureArrayList;
     }
 
     @Override
     public LectureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView =
-                LayoutInflater.from(context).inflate(R.layout.lecture_card_view, parent, false);
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.lecture_card_view,
+                                                                                    parent, false);
         return new LectureViewHolder(itemView);
     }
 

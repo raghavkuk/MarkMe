@@ -37,7 +37,7 @@ public class SummaryFragment extends Fragment {
         courseData = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(linearLayoutManager);
-        summaryAdapter = new SummaryAdapter(activity,courseData);
+        summaryAdapter = new SummaryAdapter(courseData);
         recyclerView.setAdapter(summaryAdapter);
         getData();
         return rootView;
