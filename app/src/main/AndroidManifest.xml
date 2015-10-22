@@ -25,6 +25,15 @@
                 android:value=".ui.HomeActivity" />
         </activity>
 
+        <activity
+            android:name=".ui.NewLectureActivity"
+            android:label="@string/add_new_course"
+            android:parentActivityName=".ui.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.HomeActivity" />
+        </activity>
+
         <provider
             android:name="com.markme.mmapp.db.DatabaseProvider"
             android:authorities="com.markme.mmapp.db.DatabaseProvider"

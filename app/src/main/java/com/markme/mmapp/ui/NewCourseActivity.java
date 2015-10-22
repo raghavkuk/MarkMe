@@ -138,7 +138,7 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
 
         if(!maxLectures.getText().toString().trim().equals("")){
             try{
-                int maxLec = Integer.parseInt(attendedLectures.getText().toString().trim());
+                int maxLec = Integer.parseInt(maxLectures.getText().toString().trim());
                 if(maxLec < 0) {
                     status = false;
                     maxLectures.setError("Maximum Lectures cannot be less than 0");

@@ -137,6 +137,27 @@ public class DatabaseAPI {
         return allCourses;
     }
 
+    public ArrayList<String> getAllCourseNames(){
+
+        ArrayList<String> allCourseNames = new ArrayList<String>();
+
+        Cursor cursor = this.mContext.getContentResolver().query(
+                CourseTable.CONTENT_URI,
+                new String[]{CourseTable.COLUMN_COURSE_NAME},
+                null,
+                null,
+                null
+        );
+
+        if(cursor != null)
+            while(cursor.moveToNext()){
+                String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
+                allCourseNames.add(name);
+            }
+
+        return allCourseNames;
+    }
+
     public Course getCourse(String courseId){
 
         Course course;

@@ -69,8 +69,32 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.rootLayout);
 
-        FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.addButton);
+        final FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
+        if(viewPager.getCurrentItem() == 0)
+            addButton.setVisibility(View.GONE);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0){
+                    addButton.setVisibility(View.GONE);
+                }
+                else {
+                    addButton.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -106,7 +130,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int pageNum = viewPager.getCurrentItem();
-        if (pageNum == 2) {
+        if (pageNum == 1) {
+            Intent newCourseIntent = new Intent(HomeActivity.this, NewLectureActivity.class);
+            startActivityForResult(newCourseIntent, CALL_LECTURE_INSERT);
+        }else if (pageNum == 2) {
             Intent newCourseIntent = new Intent(HomeActivity.this, NewCourseActivity.class);
             startActivityForResult(newCourseIntent, CALL_COURSE_INSERT);
         }
