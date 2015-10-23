@@ -33,6 +33,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private ViewPager viewPager;
     private Fragment[] pagerFragments;
     private String[] titles;
+    private FloatingActionButton addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +76,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
 
         rootLayout = (CoordinatorLayout) findViewById(R.id.rootLayout);
+        viewPager.addOnPageChangeListener(this);
 
-        FloatingActionButton addButton = (FloatingActionButton) findViewById(R.id.addButton);
+        addButton = (FloatingActionButton) findViewById(R.id.add_button);
+        if(viewPager.getCurrentItem() == 0)
+            addButton.setVisibility(View.GONE);
         addButton.setOnClickListener(this);
     }
 
@@ -102,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case CALL_LECTURE_INSERT:
                 if(resultCode == RESULT_OK){
                     if(pagerFragments[1] instanceof TimeTableFragment){
-                        TimeTableFragment timeTableFragment = (TimeTableFragment)pagerFragments[2];
+                        TimeTableFragment timeTableFragment = (TimeTableFragment)pagerFragments[1];
                         timeTableFragment.changeSpinnerDay(data.getIntExtra(DAY_OF_WEEK, Calendar.MONDAY));
                     }
                     Snackbar.make(rootLayout,
@@ -149,7 +153,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onPageSelected(int position) {
-
+        if(position == 0)
+            addButton.setVisibility(View.GONE);
+        else
+            addButton.setVisibility(View.VISIBLE);
     }
 
     @Override

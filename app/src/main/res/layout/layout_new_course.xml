@@ -137,7 +137,7 @@
                 android:paddingBottom="7dp"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:textColor="@color/color_fab"
+                android:textColor="#FFF"
                 android:background="@drawable/button_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

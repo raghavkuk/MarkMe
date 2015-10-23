@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.markme.mmapp.R;
 import com.markme.mmapp.data.Course;
@@ -143,7 +142,7 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
 
         if(!maxLectures.getText().toString().trim().equals("")){
             try{
-                int maxLec = Integer.parseInt(attendedLectures.getText().toString().trim());
+                int maxLec = Integer.parseInt(maxLectures.getText().toString().trim());
                 if(maxLec < 0) {
                     status = false;
                     maxLectures.setError("Maximum Lectures cannot be less than 0");

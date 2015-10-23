@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,9 +18,11 @@ import android.widget.TextView;
 import com.markme.mmapp.R;
 import com.markme.mmapp.data.Lecture;
 import com.markme.mmapp.db.DatabaseAPI;
+import com.markme.mmapp.utils.CustomSpinnerAdapter;
 import com.markme.mmapp.utils.LectureAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class TimeTableFragment extends Fragment {
@@ -35,6 +36,7 @@ public class TimeTableFragment extends Fragment {
     private ArrayList<Lecture> lectureArrayList;
     private LectureAdapter lectureAdapter;
     private Activity activity;
+    private DatabaseAPI dbApi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class TimeTableFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
+        dbApi = new DatabaseAPI(getActivity());
         initializeAllViews(rootView);
         setSpinnerListener();
         int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
@@ -65,13 +68,13 @@ public class TimeTableFragment extends Fragment {
         lectureRecyclerView = (RecyclerView)rootView.findViewById(R.id.lectureRecyclerView);
 
         spinner = (Spinner)rootView.findViewById(R.id.daySpinner);
-        ArrayAdapter<String> spinnerAdapter =
-                new ArrayAdapter<>(activity,
-                        R.layout.spinner_layout,
-                         getResources().getStringArray(R.array.five_day_array));
+        CustomSpinnerAdapter spinnerAdapter =
+                new CustomSpinnerAdapter(activity,
+                        R.layout.support_simple_spinner_dropdown_item,
+                        new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.five_day_array))));
         spinner.setAdapter(spinnerAdapter);
 
-        lectureArrayList = new ArrayList<>();
+        lectureArrayList = dbApi.getAllLectures(spinner.getSelectedItemPosition());
         lectureAdapter = new LectureAdapter(lectureArrayList);
         lectureRecyclerView.setAdapter(lectureAdapter);
 
@@ -85,9 +88,7 @@ public class TimeTableFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i != lastPosition) {
-                    loadListBasedOnDay(i+Calendar.MONDAY); // Monday = 2
-                }
+                loadListBasedOnDay(i);
             }
 
             @Override
