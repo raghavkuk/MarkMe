@@ -186,7 +186,7 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
         int engaged = Integer.valueOf(engagedLectures.getText().toString().trim());
         int attended = Integer.valueOf(attendedLectures.getText().toString().trim());
         double minimum = Double.valueOf(minAttendance.getText().toString().trim());
-        return new Course(id,name,maximum_lectures,engaged,attended,minimum);
+        return new Course(-1,id,name,maximum_lectures,engaged,attended,minimum);
     }
 
     private void submitTheData(){

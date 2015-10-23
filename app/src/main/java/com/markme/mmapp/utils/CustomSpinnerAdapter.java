@@ -1,6 +1,7 @@
 package com.markme.mmapp.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,6 @@ import com.markme.mmapp.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by raghav on 22/10/15.
- */
 public class CustomSpinnerAdapter extends ArrayAdapter<String> {
 
     private ArrayList<String> list;
@@ -27,7 +25,7 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
+       if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) spinnerContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             convertView = inflater.inflate(R.layout.custom_spinner_item_layout, parent, false);
@@ -36,6 +34,17 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
         itemValue.setText(list.get(position));
 
         return convertView;
+    }
+
+
+    @Override
+    public String getItem(int position) {
+        return list.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return list.size();
     }
 
     @Override

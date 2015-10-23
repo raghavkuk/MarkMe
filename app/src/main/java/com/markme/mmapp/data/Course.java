@@ -7,10 +7,12 @@ public class Course {
     private int totalLectures;
     private int lecturesEngaged;
     private int lecturesAttended;
+    private int id;
     private double minAttendance;
 
-    public Course(String courseId, String courseName,
+    public Course(int id, String courseId, String courseName,
                   int totalLectures, int lecturesEngaged, int lecturesAttended, double minAttendance){
+        this.id = id;
         this.courseId = courseId;
         this.courseName = courseName;
         this.totalLectures = totalLectures;
@@ -42,5 +44,9 @@ public class Course {
 
     public double getMinAttendance() {
         return minAttendance;
+    }
+
+    public int getId() {
+        return id;
     }
 }
