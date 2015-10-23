@@ -153,10 +153,31 @@ public class DatabaseAPI {
             while(cursor.moveToNext()){
                 String id = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_INST_ID));
                 String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
-                allCourseIds.put(id,name);
+                allCourseIds.put(id, name);
             }
 
         return allCourseIds;
+    }
+
+    public HashMap<String,String> getAllCourseNames(){
+        HashMap<String,String> allCourseNames = new HashMap<>();
+
+        Cursor cursor = this.mContext.getContentResolver().query(
+                CourseTable.CONTENT_URI,
+                new String[]{CourseTable.COLUMN_COURSE_NAME,CourseTable.COLUMN_COURSE_INST_ID},
+                null,
+                null,
+                null
+        );
+
+        if(cursor != null)
+            while(cursor.moveToNext()){
+                String id = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_INST_ID));
+                String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
+                allCourseNames.put(name,id);
+            }
+
+        return allCourseNames;
     }
 
     public Course getCourse(String courseId){

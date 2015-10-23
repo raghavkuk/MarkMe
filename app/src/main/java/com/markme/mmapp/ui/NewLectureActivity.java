@@ -123,12 +123,54 @@ public class NewLectureActivity extends AppCompatActivity implements View.OnClic
     }
 
     private Lecture createALecture() {
-        String courseId = courseChooseSpinner.getSelectedItem().toString();
-        String courseName = courseList.get(courseId);
+        String courseName = courseChooseSpinner.getSelectedItem().toString();
+        String courseId = courseList.get(courseName);
         int lectureDay = dayChooseSpinner.getSelectedItemPosition();
-        String startTime = startTimePicker.getCurrentHour() + ":" + startTimePicker.getCurrentMinute();
-        String endTime = endTimePicker.getCurrentHour() + ":" + endTimePicker.getCurrentMinute();
-        String location_text = location.getText().toString();
+        String startTime;
+        String endTime;
+
+        if(startTimePicker.getCurrentHour() >= 12){
+            String hour = String.valueOf(startTimePicker.getCurrentHour() % 12);
+            if(startTimePicker.getCurrentHour()%12 < 10)
+                hour = "0"+hour;
+            String minute = String.valueOf(startTimePicker.getCurrentMinute());
+            if(startTimePicker.getCurrentMinute() < 10)
+                minute = "0"+minute;
+            startTime = hour + ":" + minute + "pm";
+        } else{
+            String hour = String.valueOf(startTimePicker.getCurrentHour() % 12);
+            if(startTimePicker.getCurrentHour()%12 < 10)
+                hour = "0"+hour;
+            String minute = String.valueOf(startTimePicker.getCurrentMinute());
+            if(startTimePicker.getCurrentMinute() < 10)
+                minute = "0"+minute;
+            startTime = hour + ":" + minute + "am";
+
+            if(startTimePicker.getCurrentHour() == 0)
+                startTime = "12:" + minute + "am";
+        }
+
+        if(endTimePicker.getCurrentHour() > 12){
+            String hour = String.valueOf(endTimePicker.getCurrentHour() % 12);
+            if(endTimePicker.getCurrentHour()%12 < 10)
+                hour = "0"+hour;
+            String minute = String.valueOf(endTimePicker.getCurrentMinute());
+            if(endTimePicker.getCurrentMinute() < 10)
+                minute = "0"+minute;
+            endTime = hour + ":" + minute + "pm";
+        } else{
+            String hour = String.valueOf(endTimePicker.getCurrentHour() % 12);
+            if(endTimePicker.getCurrentHour()%12 < 10)
+                hour = "0"+hour;
+            String minute = String.valueOf(endTimePicker.getCurrentMinute());
+            if(endTimePicker.getCurrentMinute() < 10)
+                minute = "0"+minute;
+
+            endTime = hour+ ":" + minute + "am";
+            if(endTimePicker.getCurrentHour() == 0)
+                endTime = "12:" + minute + "am";
+        }
+
         return new Lecture(courseId, courseName, startTime, endTime, lectureDay, location.getText().toString());
     }
 
@@ -179,7 +221,7 @@ public class NewLectureActivity extends AppCompatActivity implements View.OnClic
 
         @Override
         protected HashMap<String, String> doInBackground(Void... voids) {
-            return databaseAPI.getAllCourseIds();
+            return databaseAPI.getAllCourseNames();
         }
 
         @Override
@@ -189,8 +231,8 @@ public class NewLectureActivity extends AppCompatActivity implements View.OnClic
                 courseIdList.clear();
                 courseNameList.clear();
                 courseList.putAll(strings);
-                courseNameList.addAll(strings.values());
-                courseIdList.addAll(strings.keySet());
+                courseNameList.addAll(strings.keySet());
+                courseIdList.addAll(strings.values());
                 courseAdapter.notifyDataSetChanged();
             } else {
                 exitEarly();

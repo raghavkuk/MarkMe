@@ -30,10 +30,9 @@ public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.LectureV
     @Override
     public void onBindViewHolder(LectureViewHolder holder, int position) {
         Lecture lecture = lectureArrayList.get(position);
-        holder.courseIdView.setText(lecture.getCourseId());
         holder.courseNameView.setText(lecture.getCourseName());
-        holder.startTimeView.setText(lecture.getStartTime());
-        holder.endTimeView.setText(lecture.getEndTime());
+        holder.lectureTime.setText(lecture.getStartTime()+" - "+lecture.getEndTime());
+        holder.lectureLocation.setText(lecture.getLocation());
     }
 
     @Override
@@ -44,15 +43,13 @@ public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.LectureV
     protected static class LectureViewHolder extends RecyclerView.ViewHolder{
 
         public TextView courseNameView;
-        public TextView courseIdView;
-        public TextView startTimeView;
-        public TextView endTimeView;
+        public TextView lectureTime;
+        public TextView lectureLocation;
         public LectureViewHolder(View itemView) {
             super(itemView);
             courseNameView = (TextView)itemView.findViewById(R.id.courseNameTextView);
-            courseIdView = (TextView)itemView.findViewById(R.id.courseIdTextView);
-            startTimeView = (TextView)itemView.findViewById(R.id.courseStartTime);
-            endTimeView = (TextView)itemView.findViewById(R.id.courseEndTime);
+            lectureTime = (TextView)itemView.findViewById(R.id.lecture_time);
+            lectureLocation = (TextView)itemView.findViewById(R.id.lecture_location);
         }
     }
 }
