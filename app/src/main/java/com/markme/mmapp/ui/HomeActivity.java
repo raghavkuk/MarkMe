@@ -22,7 +22,7 @@ import java.util.Calendar;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener,
                                                                 ViewPager.OnPageChangeListener,
-        TimeTableFragment.TimeTableInteractionListener{
+        TimeTableFragment.TimeTableInteractionListener,CoursesFragment.CourseFragmentInterface{
 
     public static final int CALL_COURSE_INSERT = 315;
     public static final int CALL_LECTURE_INSERT = 813;
@@ -189,6 +189,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         int pageNum = viewPager.getCurrentItem();
         if (pageNum == 2) {
             Intent newCourseIntent = new Intent(this, NewCourseActivity.class);
+            newCourseIntent.putExtra(NewCourseActivity.INT_EXTRA,-1);
             startActivityForResult(newCourseIntent, CALL_COURSE_INSERT);
         } else if(pageNum == 1) {
             Intent newLectureIntent = new Intent(this, NewLectureActivity.class);
@@ -220,5 +221,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Intent newLectureIntent = new Intent(this, NewLectureActivity.class);
         newLectureIntent.putExtra(NewLectureActivity.INT_EXTRA, x);
         startActivityForResult(newLectureIntent, CALL_LECTURE_EDIT);
+    }
+
+    @Override
+    public void edit_course(int c_id) {
+        Intent editCourseIntent = new Intent(this,NewCourseActivity.class);
+        editCourseIntent.putExtra(NewCourseActivity.INT_EXTRA, c_id);
+        startActivityForResult(editCourseIntent, CALL_COURSE_EDIT);
     }
 }

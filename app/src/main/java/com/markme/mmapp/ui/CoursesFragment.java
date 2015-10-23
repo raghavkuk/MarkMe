@@ -18,11 +18,13 @@ import com.markme.mmapp.utils.CoursesAdapter;
 
 import java.util.ArrayList;
 
-public class CoursesFragment extends Fragment {
+public class CoursesFragment extends Fragment implements CoursesAdapter.CourseInterface{
 
     private Activity activity;
     private CoursesAdapter coursesAdapter;
     private ArrayList<Course> courseArrayList;
+    private CourseFragmentInterface courseFragmentInterface;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,7 @@ public class CoursesFragment extends Fragment {
 
         courseArrayList = new ArrayList<>();
         coursesAdapter = new CoursesAdapter(courseArrayList);
+        coursesAdapter.setCourseInterface(this);
         recyclerView.setAdapter(coursesAdapter);
 
         getData();
@@ -52,11 +55,25 @@ public class CoursesFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
+        try {
+            courseFragmentInterface = (CourseFragmentInterface)activity;
+        } catch (ClassCastException e){
+            e.printStackTrace();
+        }
     }
 
     public void getData(){
         FetchDataTask fetchDataTask = new FetchDataTask(activity);
         fetchDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    @Override
+    public void edit_course(int course_id) {
+        courseFragmentInterface.edit_course(course_id);
+    }
+
+    public interface CourseFragmentInterface{
+        void edit_course(int c_id);
     }
 
     private class FetchDataTask extends AsyncTask<Void,Void,ArrayList<Course>>{
