@@ -83,7 +83,7 @@ public class TimeTableFragment extends Fragment implements LectureAdapter.Lectur
                         new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.five_day_array))));
         spinner.setAdapter(spinnerAdapter);
 
-        lectureArrayList = dbApi.getAllLectures(spinner.getSelectedItemPosition());
+        lectureArrayList = dbApi.getAllLectures(spinner.getSelectedItemPosition() + Calendar.MONDAY);
         lectureAdapter = new LectureAdapter(lectureArrayList);
         lectureAdapter.setLectureInterface(this);
         lectureRecyclerView.setAdapter(lectureAdapter);
@@ -98,7 +98,7 @@ public class TimeTableFragment extends Fragment implements LectureAdapter.Lectur
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                loadListBasedOnDay(i);
+                loadListBasedOnDay(i + Calendar.MONDAY);
             }
 
             @Override
@@ -115,7 +115,7 @@ public class TimeTableFragment extends Fragment implements LectureAdapter.Lectur
 
     public void changeSpinnerDay(int day){
         spinner.setSelection(day);
-        loadListBasedOnDay(day);
+        loadListBasedOnDay(day + Calendar.MONDAY);
     }
 
     @Override

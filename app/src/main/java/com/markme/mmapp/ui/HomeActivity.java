@@ -158,10 +158,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case CALL_COURSE_EDIT:
                 if(resultCode == RESULT_UPDATE_COURSE){
+                    if(pagerFragments[2] instanceof CoursesFragment){
+                        CoursesFragment coursesFragment = (CoursesFragment)pagerFragments[2];
+                        coursesFragment.getData();
+                    }
+                    if(pagerFragments[1] instanceof TimeTableFragment){
+                        TimeTableFragment timeTableFragment = (TimeTableFragment)pagerFragments[1];
+                        timeTableFragment.changeSpinnerDay(0);
+                    }
                     Snackbar.make(rootLayout,
                             "Course Updated Successfully"
                             ,Snackbar.LENGTH_SHORT).show();
                 } else if (resultCode == RESULT_DELETE_COURSE) {
+                    if(pagerFragments[2] instanceof CoursesFragment){
+                        CoursesFragment coursesFragment = (CoursesFragment)pagerFragments[2];
+                        coursesFragment.getData();
+                    }
+                    if(pagerFragments[1] instanceof TimeTableFragment){
+                        TimeTableFragment timeTableFragment = (TimeTableFragment)pagerFragments[1];
+                        timeTableFragment.changeSpinnerDay(0);
+                    }
                     Snackbar.make(rootLayout,
                             "Course Deleted Successfully"
                             ,Snackbar.LENGTH_SHORT).show();

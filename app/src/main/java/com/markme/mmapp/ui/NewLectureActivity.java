@@ -156,7 +156,7 @@ public class NewLectureActivity extends AppCompatActivity implements View.OnClic
     private Lecture createALecture() {
         String courseName = courseChooseSpinner.getSelectedItem().toString();
         String courseId = courseList.get(courseName);
-        int lectureDay = dayChooseSpinner.getSelectedItemPosition();
+        int lectureDay = dayChooseSpinner.getSelectedItemPosition() + Calendar.MONDAY;
         String startTime = startTimePicker.getCurrentHour() + ":" + startTimePicker.getCurrentMinute();
         String endTime = endTimePicker.getCurrentHour() + ":" + endTimePicker.getCurrentMinute();
         String location_text = location.getText().toString();

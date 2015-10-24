@@ -25,6 +25,7 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
     private LinearLayout rootLayout;
 
     private int edit_id;
+    private Course old_course;
 
     public static final String INT_EXTRA  = "course_int_extra";
 
@@ -212,11 +213,12 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
             enterDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,course);
         } else {
             UpdateDataTask updateDataTask = new UpdateDataTask(this);
-            updateDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, course);
+            updateDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, old_course, course);
         }
     }
 
     private void loadDetails(Course course){
+        old_course = course;
         courseId.setText(course.getCourseId());
         courseName.setText(course.getCourseName());
         engagedLectures.setText(course.getLecturesEngaged()+"");
@@ -235,7 +237,7 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
 
     private void deleteCourse(){
         DeleteDataTask deleteDataTask = new DeleteDataTask(this);
-        deleteDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,edit_id);
+        deleteDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,old_course);
     }
 
     @Override
@@ -324,7 +326,7 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected Boolean doInBackground(Course... courses) {
-            return databaseAPI.updateCourse(courses[0]);
+            return databaseAPI.updateCourse(courses[0], courses[1]);
         }
 
         @Override
@@ -338,7 +340,7 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private class DeleteDataTask extends AsyncTask<Integer,Void,Integer>{
+    private class DeleteDataTask extends AsyncTask<Course,Void,Integer>{
 
         private DatabaseAPI databaseAPI;
 
@@ -353,8 +355,8 @@ public class NewCourseActivity extends AppCompatActivity implements View.OnClick
         }
 
         @Override
-        protected Integer doInBackground(Integer... integers) {
-            return databaseAPI.deleteCourse(integers[0]);
+        protected Integer doInBackground(Course... courses) {
+            return databaseAPI.deleteCourse(courses[0]);
         }
 
         @Override

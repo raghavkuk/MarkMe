@@ -28,6 +28,7 @@ public class DatabaseAPI {
      * COURSE TABLE API
      * *******************************************
      */
+
     public boolean isCoursePresent(String courseId) {
 
         boolean result = false;
@@ -108,13 +109,16 @@ public class DatabaseAPI {
         return courseValues;
     }
 
-    public boolean updateCourse(Course newValues) {
+    public boolean updateCourse(Course oldValues, Course newValues) {
 
         boolean result = false;
 
         if(isCoursePresent(newValues)){
             return false;
         }
+
+        updateLecturesWithCourse(oldValues, newValues);
+
         ContentValues cv = new ContentValues();
         cv.put(CourseTable.COLUMN_COURSE_INST_ID, newValues.getCourseId());
         cv.put(CourseTable.COLUMN_COURSE_NAME, newValues.getCourseName());
@@ -221,21 +225,30 @@ public class DatabaseAPI {
         return course;
     }
 
-    public int deleteCourse(int courseId){
+    public int deleteCourse(Course courseId){
+
+        int delete_lectures = this.mContext.getContentResolver().delete(
+                LectureTable.CONTENT_URI,
+                LectureTable.COLUMN_LECTURE_COURSE_ID + "=?",
+                new String[]{courseId.getCourseId()}
+        );
+
+        Log.d("deleted_lectures",delete_lectures+"");
 
         return this.mContext.getContentResolver().delete(
                 CourseTable.CONTENT_URI,
                 CourseTable._ID + "=? ",
-                new String[]{courseId+""}
+                new String[]{courseId.getId()+""}
         );
     }
 
 
-    /**
+    /*
      * ******************************************
      * LECTURE TABLE API
      * *******************************************
      */
+
     public boolean isLecturePresent(Lecture lecture) {
 
         boolean result = false;
@@ -388,6 +401,19 @@ public class DatabaseAPI {
                 LectureTable._ID + "=?",
                 new String[]{id+""}
         );
+    }
+
+    public void updateLecturesWithCourse(Course old_course, Course new_course){
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(LectureTable.COLUMN_LECTURE_COURSE_ID, new_course.getCourseId());
+        contentValues.put(LectureTable.COLUMN_LECTURE_COURSE_NAME, new_course.getCourseName());
+
+        long numRowsAffected = this.mContext.getContentResolver().update(
+                LectureTable.CONTENT_URI,
+                contentValues,
+                LectureTable.COLUMN_LECTURE_COURSE_ID + "=? and " + LectureTable.COLUMN_LECTURE_COURSE_NAME + "=?",
+                new String[]{old_course.getCourseId(),old_course.getCourseName()});
     }
 
 }
