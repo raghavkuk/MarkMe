@@ -111,6 +111,46 @@ public class DatabaseAPI {
         return result;
     }
 
+    public boolean updateAttendedLectures(String courseId, int newAttended) {
+
+        boolean result = false;
+
+        ContentValues cv = new ContentValues();
+        cv.put(CourseTable.COLUMN_COURSE_ATTENDED_LECTURES, newAttended);
+
+        long numRowsAffected = this.mContext.getContentResolver().update(
+                CourseTable.CONTENT_URI,
+                cv,
+                CourseTable.COLUMN_COURSE_INST_ID + "=? ",
+                new String[]{courseId});
+
+        if (numRowsAffected > 0) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public boolean updateEngagedLectures(String courseId, int newEngaged) {
+
+        boolean result = false;
+
+        ContentValues cv = new ContentValues();
+        cv.put(CourseTable.COLUMN_COURSE_ENGAGED_LECTURES, newEngaged);
+
+        long numRowsAffected = this.mContext.getContentResolver().update(
+                CourseTable.CONTENT_URI,
+                cv,
+                CourseTable.COLUMN_COURSE_INST_ID + "=? ",
+                new String[]{courseId});
+
+        if (numRowsAffected > 0) {
+            result = true;
+        }
+
+        return result;
+    }
+
     public ArrayList<Course> getAllCourses(){
 
         ArrayList<Course> allCourses = new ArrayList<Course>();
@@ -193,6 +233,7 @@ public class DatabaseAPI {
         );
 
         if(cursor != null){
+            cursor.moveToNext();
             String id = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_INST_ID));
             String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
             int max = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_MAX_LECTURES));

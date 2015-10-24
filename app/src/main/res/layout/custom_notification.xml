@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/title_custom_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:padding="5dp"
+        android:text="Are you attending the class?"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/yes_button_custom_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yes"
+        android:textColor="#FFF"
+        android:background="#009900"
+        android:layout_margin="5dp"
+        android:layout_below="@id/title_custom_notification"
+        android:padding="5dp"/>
+
+    <Button
+        android:id="@+id/no_button_custom_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No"
+        android:textColor="#FFF"
+        android:background="#CC0000"
+        android:layout_margin="5dp"
+        android:layout_below="@id/title_custom_notification"
+        android:layout_toRightOf="@id/yes_button_custom_notification"
+        android:padding="5dp" />
+
+</RelativeLayout>

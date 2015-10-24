@@ -33,7 +33,8 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(R.layout.custom_spinner_item_layout, parent, false);
         }
         TextView itemValue =  (TextView) convertView.findViewById(R.id.custom_spinner_main_content);
-        itemValue.setText(list.get(position));
+        if(position < 5)
+            itemValue.setText(list.get(position));
 
         return convertView;
     }

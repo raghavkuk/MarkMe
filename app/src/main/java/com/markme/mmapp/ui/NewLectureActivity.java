@@ -18,6 +18,7 @@ import com.markme.mmapp.R;
 import com.markme.mmapp.data.Lecture;
 import com.markme.mmapp.db.DatabaseAPI;
 import com.markme.mmapp.utils.CustomSpinnerAdapter;
+import com.markme.mmapp.utils.General;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -256,6 +257,7 @@ public class NewLectureActivity extends AppCompatActivity implements View.OnClic
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
+                General.initializeAlarms(NewLectureActivity.this);
                 exit_properly();
             } else {
                 showFailure();

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.markme.mmapp" >
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -39,6 +41,30 @@
             android:authorities="com.markme.mmapp.db.DatabaseProvider"
             android:exported="true" >
         </provider>
+
+        <receiver android:name=".utils.BootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="ANDROID.INTENT.ACTION.DATE_CHANGED"></action>
+                <action android:name="CLASS_REMINDER"></action>
+                <action android:name="MARK_ATTENDANCE"></action>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".utils.YesButtonReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="ATTENDING"></action>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".utils.NoButtonReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="ATTENDING"></action>
+            </intent-filter>
+        </receiver>
 
 
     </application>
