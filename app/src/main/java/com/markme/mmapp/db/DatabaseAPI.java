@@ -226,7 +226,7 @@ public class DatabaseAPI {
             while(cursor.moveToNext()){
                 String id = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_INST_ID));
                 String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
-                allCourseIds.put(name,id);
+                allCourseIds.put(name, id);
             }
             cursor.close();
         }
@@ -264,6 +264,37 @@ public class DatabaseAPI {
 
         return course;
     }
+
+    public Course getCourse(String courseId){
+
+        Course course;
+
+        Cursor cursor = this.mContext.getContentResolver().query(
+                CourseTable.CONTENT_URI,
+                null,
+                CourseTable.COLUMN_COURSE_INST_ID + "=? ",
+                new String[]{courseId},
+                null
+        );
+
+        if(cursor != null){
+            cursor.moveToFirst();
+            int entry_id = cursor.getInt(cursor.getColumnIndex(CourseTable._ID));
+            String id = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_INST_ID));
+            String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
+            int max = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_MAX_LECTURES));
+            int engaged = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_ENGAGED_LECTURES));
+            int attended = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_ATTENDED_LECTURES));
+            int minimum = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_MIN_ATTENDANCE));
+            course = new Course(entry_id, id, name, max, engaged, attended,minimum);
+            cursor.close();
+        }else{
+            course = null;
+        }
+
+        return course;
+    }
+
 
     public int deleteCourse(Course courseId){
 

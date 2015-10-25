@@ -8,9 +8,6 @@ import android.content.Intent;
 import com.markme.mmapp.data.Course;
 import com.markme.mmapp.db.DatabaseAPI;
 
-/**
- * Created by raghav on 24/10/15.
- */
 public class YesButtonReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

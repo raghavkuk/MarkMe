@@ -37,8 +37,8 @@ public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.LectureV
     @Override
     public void onBindViewHolder(LectureViewHolder holder, int position) {
         final Lecture lecture = lectureArrayList.get(position);
-        holder.courseIdView.setText(lecture.getCourseId());
         holder.courseNameView.setText(lecture.getCourseName());
+        holder.courseIdView.setText(lecture.getCourseId());
         holder.startTimeView.setText(convertTo12Hour(lecture.getStartTime()));
         holder.endTimeView.setText(convertTo12Hour(lecture.getEndTime()));
         holder.locationTextView.setText(lecture.getLocation());
