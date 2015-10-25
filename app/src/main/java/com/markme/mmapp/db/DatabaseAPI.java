@@ -28,6 +28,7 @@ public class DatabaseAPI {
      * COURSE TABLE API
      * *******************************************
      */
+
     public boolean isCoursePresent(String courseId) {
 
         boolean result = false;
@@ -37,6 +38,27 @@ public class DatabaseAPI {
                 new String[]{CourseTable.COLUMN_COURSE_INST_ID},
                 CourseTable.COLUMN_COURSE_INST_ID + "=?",
                 new String[]{courseId},
+                null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            if (cursor.getCount() > 0) {
+                result = true;
+            }
+            cursor.close();
+        }
+        return result;
+    }
+
+    public boolean isCoursePresent(Course course) {
+
+        boolean result = false;
+
+        Cursor cursor = this.mContext.getContentResolver().query(
+                CourseTable.CONTENT_URI,
+                new String[]{CourseTable.COLUMN_COURSE_INST_ID},
+                CourseTable.COLUMN_COURSE_INST_ID + "=? and "+CourseTable._ID+" !=?",
+                new String[]{course.getCourseId(),course.getId()+""},
                 null);
 
         if (cursor != null) {
@@ -87,11 +109,18 @@ public class DatabaseAPI {
         return courseValues;
     }
 
-    public boolean updateCourse(Course newValues) {
+    public boolean updateCourse(Course oldValues, Course newValues) {
 
         boolean result = false;
 
+        if(isCoursePresent(newValues)){
+            return false;
+        }
+
+        updateLecturesWithCourse(oldValues, newValues);
+
         ContentValues cv = new ContentValues();
+        cv.put(CourseTable.COLUMN_COURSE_INST_ID, newValues.getCourseId());
         cv.put(CourseTable.COLUMN_COURSE_NAME, newValues.getCourseName());
         cv.put(CourseTable.COLUMN_COURSE_ENGAGED_LECTURES, newValues.getLecturesEngaged());
         cv.put(CourseTable.COLUMN_COURSE_ATTENDED_LECTURES, newValues.getLecturesAttended());
@@ -101,8 +130,8 @@ public class DatabaseAPI {
         long numRowsAffected = this.mContext.getContentResolver().update(
                 CourseTable.CONTENT_URI,
                 cv,
-                CourseTable.COLUMN_COURSE_INST_ID + "=? ",
-                new String[]{newValues.getCourseId()});
+                CourseTable._ID + "=? ",
+                new String[]{newValues.getId()+""});
 
         if (numRowsAffected > 0) {
             result = true;
@@ -153,7 +182,7 @@ public class DatabaseAPI {
 
     public ArrayList<Course> getAllCourses(){
 
-        ArrayList<Course> allCourses = new ArrayList<Course>();
+        ArrayList<Course> allCourses = new ArrayList<>();
 
         Cursor cursor = this.mContext.getContentResolver().query(
                 CourseTable.CONTENT_URI,
@@ -163,17 +192,21 @@ public class DatabaseAPI {
                 null
         );
 
-        if(cursor != null)
+        if(cursor != null){
             while(cursor.moveToNext()){
+                int entry_id = cursor.getInt(cursor.getColumnIndex(CourseTable._ID));
                 String id = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_INST_ID));
                 String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
                 int max = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_MAX_LECTURES));
                 int engaged = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_ENGAGED_LECTURES));
                 int attended = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_ATTENDED_LECTURES));
                 int minimum = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_MIN_ATTENDANCE));
-                Course course = new Course(id, name, max, engaged, attended,minimum);
+                Course course = new Course(entry_id, id, name, max, engaged, attended,minimum);
                 allCourses.add(course);
             }
+            cursor.close();
+        }
+
 
         return allCourses;
     }
@@ -183,64 +216,48 @@ public class DatabaseAPI {
 
         Cursor cursor = this.mContext.getContentResolver().query(
                 CourseTable.CONTENT_URI,
-                new String[]{CourseTable.COLUMN_COURSE_INST_ID,CourseTable.COLUMN_COURSE_NAME},
-                null,
-                null,
-                null
-        );
-
-        if(cursor != null)
-            while(cursor.moveToNext()){
-                String id = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_INST_ID));
-                String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
-                allCourseIds.put(id, name);
-            }
-
-        return allCourseIds;
-    }
-
-    public HashMap<String,String> getAllCourseNames(){
-        HashMap<String,String> allCourseNames = new HashMap<>();
-
-        Cursor cursor = this.mContext.getContentResolver().query(
-                CourseTable.CONTENT_URI,
                 new String[]{CourseTable.COLUMN_COURSE_NAME,CourseTable.COLUMN_COURSE_INST_ID},
                 null,
                 null,
                 null
         );
 
-        if(cursor != null)
+        if(cursor != null){
             while(cursor.moveToNext()){
                 String id = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_INST_ID));
                 String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
-                allCourseNames.put(name,id);
+                allCourseIds.put(name,id);
             }
+            cursor.close();
+        }
 
-        return allCourseNames;
+
+        return allCourseIds;
     }
 
-    public Course getCourse(String courseId){
+    public Course getCourse(int courseId){
 
         Course course;
 
         Cursor cursor = this.mContext.getContentResolver().query(
                 CourseTable.CONTENT_URI,
                 null,
-                CourseTable.COLUMN_COURSE_INST_ID + "=? ",
-                new String[]{courseId},
+                CourseTable._ID + "=? ",
+                new String[]{courseId+""},
                 null
         );
 
         if(cursor != null){
-            cursor.moveToNext();
+            cursor.moveToFirst();
+            int entry_id = cursor.getInt(cursor.getColumnIndex(CourseTable._ID));
             String id = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_INST_ID));
             String name = cursor.getString(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_NAME));
             int max = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_MAX_LECTURES));
             int engaged = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_ENGAGED_LECTURES));
             int attended = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_ATTENDED_LECTURES));
             int minimum = cursor.getInt(cursor.getColumnIndex(CourseTable.COLUMN_COURSE_MIN_ATTENDANCE));
-            course = new Course(id, name, max, engaged, attended,minimum);
+            course = new Course(entry_id, id, name, max, engaged, attended,minimum);
+            cursor.close();
         }else{
             course = null;
         }
@@ -248,23 +265,30 @@ public class DatabaseAPI {
         return course;
     }
 
-    public int deleteCourse(String courseId){
+    public int deleteCourse(Course courseId){
 
-        int rowsAffected = this.mContext.getContentResolver().delete(
-                CourseTable.CONTENT_URI,
-                CourseTable.COLUMN_COURSE_INST_ID + "=? ",
-                new String[]{courseId}
+        int delete_lectures = this.mContext.getContentResolver().delete(
+                LectureTable.CONTENT_URI,
+                LectureTable.COLUMN_LECTURE_COURSE_ID + "=?",
+                new String[]{courseId.getCourseId()}
         );
 
-        return rowsAffected;
+        Log.d("deleted_lectures",delete_lectures+"");
+
+        return this.mContext.getContentResolver().delete(
+                CourseTable.CONTENT_URI,
+                CourseTable._ID + "=? ",
+                new String[]{courseId.getId()+""}
+        );
     }
 
 
-    /**
+    /*
      * ******************************************
      * LECTURE TABLE API
      * *******************************************
      */
+
     public boolean isLecturePresent(Lecture lecture) {
 
         boolean result = false;
@@ -324,11 +348,13 @@ public class DatabaseAPI {
         return lectureValues;
     }
 
-    public boolean updateLecture(Lecture oldValues, Lecture newValues) {
+    public boolean updateLecture(Lecture newValues) {
 
         boolean result = false;
 
         ContentValues cv = new ContentValues();
+        cv.put(LectureTable.COLUMN_LECTURE_COURSE_ID, newValues.getCourseId());
+        cv.put(LectureTable.COLUMN_LECTURE_COURSE_NAME, newValues.getCourseName());
         cv.put(LectureTable.COLUMN_LECTURE_START_TIME, newValues.getStartTime());
         cv.put(LectureTable.COLUMN_LECTURE_END_TIME, newValues.getEndTime());
         cv.put(LectureTable.COLUMN_LECTURE_DAY, newValues.getDay());
@@ -337,8 +363,8 @@ public class DatabaseAPI {
         long numRowsAffected = this.mContext.getContentResolver().update(
                 LectureTable.CONTENT_URI,
                 cv,
-                LectureTable.COLUMN_LECTURE_START_TIME + "=? and " + LectureTable.COLUMN_LECTURE_DAY + "=?",
-                new String[]{oldValues.getStartTime(), String.valueOf(oldValues.getDay())});
+                LectureTable._ID + "=?",
+                new String[]{newValues.getId() + ""});
 
         if (numRowsAffected > 0) {
             result = true;
@@ -349,7 +375,7 @@ public class DatabaseAPI {
 
     public ArrayList<Lecture> getAllLectures(int mDay){
 
-        ArrayList<Lecture> allLectures = new ArrayList<Lecture>();
+        ArrayList<Lecture> allLectures = new ArrayList<>();
 
         Cursor cursor = this.mContext.getContentResolver().query(
                 LectureTable.CONTENT_URI,
@@ -359,41 +385,48 @@ public class DatabaseAPI {
                 null
         );
 
-        if(cursor != null)
+        if(cursor != null){
             while(cursor.moveToNext()){
+                int entry_id = cursor.getInt(cursor.getColumnIndex(LectureTable._ID));
                 String id = cursor.getString(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_COURSE_ID));
                 String name = cursor.getString(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_COURSE_NAME));
                 String startTime = cursor.getString(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_START_TIME));
                 String endTime = cursor.getString(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_END_TIME));
                 int dayOfWeek = cursor.getInt(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_DAY));
                 String location = cursor.getString(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_LOCATION));
-                Lecture lecture = new Lecture(id, name, startTime, endTime, dayOfWeek, location);
+                Lecture lecture = new Lecture(entry_id,id, name, startTime, endTime, dayOfWeek, location);
                 allLectures.add(lecture);
             }
+            cursor.close();
+        }
+
 
         return allLectures;
     }
 
-    public Lecture getLecture(Course course, int mDay, String mStartTime){
+    public Lecture getLecture(int lec_id){
 
         Lecture lecture;
 
         Cursor cursor = this.mContext.getContentResolver().query(
                 LectureTable.CONTENT_URI,
                 null,
-                LectureTable.COLUMN_LECTURE_COURSE_ID + "=? and " + LectureTable.COLUMN_LECTURE_DAY + "=? and " + LectureTable.COLUMN_LECTURE_START_TIME + "=?",
-                new String[]{course.getCourseId(), String.valueOf(mDay), mStartTime},
+                LectureTable._ID + "=?",
+                new String[]{lec_id+""},
                 null
         );
 
         if(cursor != null){
+            cursor.moveToFirst();
+                int entry_id = cursor.getInt(cursor.getColumnIndex(LectureTable._ID));
                 String id = cursor.getString(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_COURSE_ID));
                 String name = cursor.getString(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_COURSE_NAME));
                 String startTime = cursor.getString(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_START_TIME));
                 String endTime = cursor.getString(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_END_TIME));
                 int dayOfWeek = cursor.getInt(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_DAY));
                 String location = cursor.getString(cursor.getColumnIndex(LectureTable.COLUMN_LECTURE_LOCATION));
-                lecture = new Lecture(id, name, startTime, endTime, dayOfWeek, location);
+                lecture = new Lecture(entry_id,id, name, startTime, endTime, dayOfWeek, location);
+                cursor.close();
         }else{
             lecture = null;
         }
@@ -401,15 +434,26 @@ public class DatabaseAPI {
         return lecture;
     }
 
-    public int deleteLecture(Course course, String startTime, int day){
+    public int deleteLecture(int id){
 
-        int rowsAffected = this.mContext.getContentResolver().delete(
+        return this.mContext.getContentResolver().delete(
                 LectureTable.CONTENT_URI,
-                LectureTable.COLUMN_LECTURE_COURSE_ID + "=? and " + LectureTable.COLUMN_LECTURE_START_TIME + "=? and " + LectureTable.COLUMN_LECTURE_DAY + "=?",
-                new String[]{course.getCourseId(), startTime, String.valueOf(day)}
+                LectureTable._ID + "=?",
+                new String[]{id+""}
         );
+    }
 
-        return rowsAffected;
+    public void updateLecturesWithCourse(Course old_course, Course new_course){
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(LectureTable.COLUMN_LECTURE_COURSE_ID, new_course.getCourseId());
+        contentValues.put(LectureTable.COLUMN_LECTURE_COURSE_NAME, new_course.getCourseName());
+
+        long numRowsAffected = this.mContext.getContentResolver().update(
+                LectureTable.CONTENT_URI,
+                contentValues,
+                LectureTable.COLUMN_LECTURE_COURSE_ID + "=? and " + LectureTable.COLUMN_LECTURE_COURSE_NAME + "=?",
+                new String[]{old_course.getCourseId(),old_course.getCourseName()});
     }
 
 }

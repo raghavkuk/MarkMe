@@ -6,9 +6,10 @@ public class Lecture {
     private String startTime;
     private String endTime;
     private int day;
+    private int id;
     private String location;
 
-    public Lecture(String courseId,
+    public Lecture(int id, String courseId,
                    String courseName, String startTime, String endTime, int day, String location){
         this.courseId = courseId;
         this.courseName = courseName;
@@ -16,6 +17,7 @@ public class Lecture {
         this.endTime = endTime;
         this.day = day;
         this.location = location;
+        this.id = id;
     }
 
 
@@ -41,5 +43,9 @@ public class Lecture {
 
     public String getLocation() {
         return location;
+    }
+
+    public int getId() {
+        return id;
     }
 }

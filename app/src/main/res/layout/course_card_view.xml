@@ -5,27 +5,17 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_icon"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="12dp"
-            android:layout_margin="4dp"
-            android:src="@drawable/ic_edit"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/course_name"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:text="System Software"
             android:textSize="24sp" />
 
@@ -33,9 +23,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/course_id"
-            android:text="CS468"
-            android:layout_below="@+id/course_name" />
+            android:text="CS468" />
 
-    </RelativeLayout>
+        <View
+            android:background="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <Button
+            android:id="@+id/course_edit_button"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:gravity="center"
+            android:background="@android:color/white"
+            android:textColor="@android:color/holo_blue_light"
+            android:text="Edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

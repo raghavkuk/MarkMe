@@ -25,18 +25,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
-public class TimeTableFragment extends Fragment {
+public class TimeTableFragment extends Fragment implements LectureAdapter.LectureInterface{
 
 
     private Spinner spinner;
     private RecyclerView lectureRecyclerView;
     private ProgressBar progressBar;
     private TextView textView;
-    private int lastPosition = 0;
     private ArrayList<Lecture> lectureArrayList;
     private LectureAdapter lectureAdapter;
     private Activity activity;
     private DatabaseAPI dbApi;
+    private TimeTableInteractionListener timeTableInteractionListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,10 @@ public class TimeTableFragment extends Fragment {
         initializeAllViews(rootView);
         setSpinnerListener();
         int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+
+        if (day >= Calendar.MONDAY && day <= Calendar.FRIDAY)
         spinner.setSelection(day - Calendar.MONDAY);
+
         loadListBasedOnDay(day);
         return rootView;
     }
@@ -60,6 +63,12 @@ public class TimeTableFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
+        try {
+            timeTableInteractionListener = (TimeTableInteractionListener)activity;
+        } catch (ClassCastException e){
+            e.printStackTrace();
+        }
+
     }
 
     private void initializeAllViews(View rootView){
@@ -74,8 +83,9 @@ public class TimeTableFragment extends Fragment {
                         new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.five_day_array))));
         spinner.setAdapter(spinnerAdapter);
 
-        lectureArrayList = dbApi.getAllLectures(spinner.getSelectedItemPosition());
+        lectureArrayList = dbApi.getAllLectures(spinner.getSelectedItemPosition() + Calendar.MONDAY);
         lectureAdapter = new LectureAdapter(lectureArrayList);
+        lectureAdapter.setLectureInterface(this);
         lectureRecyclerView.setAdapter(lectureAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
@@ -88,7 +98,7 @@ public class TimeTableFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                loadListBasedOnDay(i);
+                loadListBasedOnDay(i + Calendar.MONDAY);
             }
 
             @Override
@@ -105,8 +115,18 @@ public class TimeTableFragment extends Fragment {
 
     public void changeSpinnerDay(int day){
         spinner.setSelection(day);
-        loadListBasedOnDay(day);
+        loadListBasedOnDay(day + Calendar.MONDAY);
     }
+
+    @Override
+    public void updateLecture(int lec_id) {
+        timeTableInteractionListener.editTimeTable(lec_id);
+    }
+
+    public interface TimeTableInteractionListener{
+        void editTimeTable(int x);
+    }
+
 
     private class LoadLecturesTask extends AsyncTask<Integer,Void,ArrayList<Lecture>>{
 
