@@ -5,3 +5,11 @@
 .DS_Store
 /build
 /captures
+app/src/main/java/com/markme/mmapp/db/DatabaseAPI.java.orig
+	app/src/main/java/com/markme/mmapp/ui/NewLectureActivity.java.orig
+	app/src/main/java/com/markme/mmapp/ui/NewLectureActivity_BACKUP_1580.java
+	app/src/main/java/com/markme/mmapp/ui/NewLectureActivity_BASE_1580.java
+	app/src/main/java/com/markme/mmapp/ui/NewLectureActivity_LOCAL_1580.java
+	app/src/main/java/com/markme/mmapp/ui/NewLectureActivity_REMOTE_1580.java
+	app/src/main/java/com/markme/mmapp/utils/LectureAdapter.java.orig
+	app/src/main/res/layout/lecture_card_view.xml.orig
