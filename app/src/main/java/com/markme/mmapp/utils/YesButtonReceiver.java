@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import com.markme.mmapp.data.Course;
 import com.markme.mmapp.db.DatabaseAPI;
+import com.markme.mmapp.ui.SummaryFragment;
 
 public class YesButtonReceiver extends BroadcastReceiver {
     @Override
@@ -20,6 +21,7 @@ public class YesButtonReceiver extends BroadcastReceiver {
             Course course = databaseAPI.getCourse(courseId);
             databaseAPI.updateAttendedLectures(courseId, course.getLecturesAttended() + 1);
             databaseAPI.updateEngagedLectures(courseId, course.getLecturesEngaged() + 1);
+            SummaryFragment.newInstance().refresh(context);
         }
     }
 }

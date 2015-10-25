@@ -24,6 +24,11 @@ public class SummaryFragment extends Fragment {
     private ArrayList<Course> courseData;
     private Activity activity;
 
+    public static SummaryFragment newInstance() {
+        SummaryFragment summaryFragment = new SummaryFragment();
+        return summaryFragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,16 @@ public class SummaryFragment extends Fragment {
     private void getData(){
         FetchDataTask fetchDataTask = new FetchDataTask(activity);
         fetchDataTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    public void refresh(Context context){
+        DatabaseAPI databaseAPI = new DatabaseAPI(context);
+        courseData = new ArrayList<>();
+        courseData.addAll(databaseAPI.getAllCourses());
+        if(summaryAdapter != null)
+            summaryAdapter.notifyDataSetChanged();
+        else
+            summaryAdapter  = new SummaryAdapter(courseData);
     }
 
     private class FetchDataTask extends AsyncTask<Void,Void,ArrayList<Course>>{

@@ -80,6 +80,10 @@ public class BootReceiver extends BroadcastReceiver {
 
             mBuilder.setSmallIcon(R.drawable.plus_icon)
                     .setContent(customView);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mBuilder.setColor(context.getResources().getColor(R.color.app_primary));
+                mBuilder.setSmallIcon(R.drawable.plus_icon);
+            }
             mNotificationManager.notify(1, mBuilder.build());
 
         }

@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import com.markme.mmapp.data.Course;
 import com.markme.mmapp.db.DatabaseAPI;
+import com.markme.mmapp.ui.SummaryFragment;
 
 /**
  * Created by raghav on 24/10/15.
@@ -22,7 +23,7 @@ public class NoButtonReceiver extends BroadcastReceiver {
             String courseId = intent.getStringExtra("course_id");
             Course course = databaseAPI.getCourse(courseId);
             databaseAPI.updateEngagedLectures(courseId, course.getLecturesEngaged()+1);
-
+            SummaryFragment.newInstance().refresh(context);
         }
     }
 }

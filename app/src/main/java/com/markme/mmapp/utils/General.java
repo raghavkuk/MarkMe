@@ -21,7 +21,7 @@ public class General {
 
     public static void initializeAlarms(Context context) {
         DatabaseAPI dbApi = new DatabaseAPI(context);
-        ArrayList<Lecture> todaysLectures = dbApi.getAllLectures(0);
+        ArrayList<Lecture> todaysLectures = dbApi.getAllLectures(Calendar.DAY_OF_WEEK);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
@@ -37,15 +37,7 @@ public class General {
 
             String startTime = todaysLectures.get(i).getStartTime();
 
-            int hourReminder;
-
-            if (startTime.substring(startTime.length() - 2, startTime.length()).equals("pm"))
-                hourReminder = Integer.valueOf(startTime.substring(0, 2)) + 12;
-            else {
-                hourReminder = Integer.valueOf(startTime.substring(0, 2));
-                if (hourReminder == 12)
-                    hourReminder = 0;
-            }
+            int hourReminder = Integer.valueOf(startTime.substring(0, 2));
 
             int minuteReminder = Integer.valueOf(startTime.substring(3, 5));
 
