@@ -21,7 +21,8 @@ public class General {
 
     public static void initializeAlarms(Context context) {
         DatabaseAPI dbApi = new DatabaseAPI(context);
-        ArrayList<Lecture> todaysLectures = dbApi.getAllLectures(Calendar.DAY_OF_WEEK);
+        Calendar c = Calendar.getInstance();
+        ArrayList<Lecture> todaysLectures = dbApi.getAllLectures(c.get(Calendar.DAY_OF_WEEK));
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
