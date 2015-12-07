@@ -97,6 +97,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
+
         <TextView
             android:id="@+id/percentageAttendanceView"
             android:textStyle="bold"
