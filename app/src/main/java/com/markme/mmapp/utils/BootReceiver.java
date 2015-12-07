@@ -28,7 +28,7 @@ public class BootReceiver extends BroadcastReceiver {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context)
-                            .setSmallIcon(R.drawable.plus_icon);
+                            .setSmallIcon(R.drawable.app_icon);
 
             String className = intent.getStringExtra("course_name");
             String startTime = intent.getStringExtra("start_time");
@@ -45,7 +45,7 @@ public class BootReceiver extends BroadcastReceiver {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mBuilder.setColor(context.getResources().getColor(R.color.app_primary));
-                mBuilder.setSmallIcon(R.drawable.plus_icon);
+                mBuilder.setSmallIcon(R.drawable.app_icon);
             }
 
             Intent resultIntent = new Intent(context, HomeActivity.class);
@@ -78,11 +78,11 @@ public class BootReceiver extends BroadcastReceiver {
             customView.setOnClickPendingIntent(R.id.yes_button_custom_notification, yesPendingButtonIntent);
             customView.setOnClickPendingIntent(R.id.no_button_custom_notification, noPendingButtonIntent);
 
-            mBuilder.setSmallIcon(R.drawable.plus_icon)
+            mBuilder.setSmallIcon(R.drawable.app_icon)
                     .setContent(customView);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mBuilder.setColor(context.getResources().getColor(R.color.app_primary));
-                mBuilder.setSmallIcon(R.drawable.plus_icon);
+                mBuilder.setSmallIcon(R.drawable.app_icon);
             }
             mNotificationManager.notify(1, mBuilder.build());
 
