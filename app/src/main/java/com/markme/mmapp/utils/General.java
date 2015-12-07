@@ -38,9 +38,11 @@ public class General {
 
             String startTime = todaysLectures.get(i).getStartTime();
 
-            int hourReminder = Integer.valueOf(startTime.substring(0, 2));
+            String[] splitArray = startTime.split(":");
 
-            int minuteReminder = Integer.valueOf(startTime.substring(3, 5));
+            int hourReminder = Integer.valueOf(splitArray[0]);
+
+            int minuteReminder = Integer.valueOf(splitArray[1]);
 
             if (minuteReminder < 5) {
                 minuteReminder = 55 + minuteReminder;

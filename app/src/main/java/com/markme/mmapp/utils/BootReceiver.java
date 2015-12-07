@@ -68,7 +68,7 @@ public class BootReceiver extends BroadcastReceiver {
             PendingIntent yesPendingButtonIntent = PendingIntent.getBroadcast(context, 500, yesButtonIntent, 0); //500 is arbitrary
 
             Intent noButtonIntent = new Intent(context, YesButtonReceiver.class);
-            noButtonIntent.setAction("ATTENDING");
+            noButtonIntent.setAction("NOT_ATTENDING");
             noButtonIntent.putExtra("course_id", classId);
             noButtonIntent.putExtra("notification_id", 1);
             PendingIntent noPendingButtonIntent = PendingIntent.getBroadcast(context, 501, yesButtonIntent, 0);

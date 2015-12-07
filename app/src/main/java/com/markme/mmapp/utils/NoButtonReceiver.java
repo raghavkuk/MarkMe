@@ -15,7 +15,7 @@ import com.markme.mmapp.ui.SummaryFragment;
 public class NoButtonReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(intent.getAction().equals("ATTENDING")){
+        if(intent.getAction().equals("NOT_ATTENDING")){
 
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             manager.cancel(intent.getIntExtra("notificaiton_id", -1));
