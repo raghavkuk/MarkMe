@@ -36,7 +36,7 @@ public class BootReceiver extends BroadcastReceiver {
 
             mBuilder.setContentTitle("Class at " + startTime + " in " + location);
             mBuilder.setContentText(className);
-            mBuilder.setAutoCancel(true);
+            mBuilder.setAutoCancel(false);
 
             NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
             bigTextStyle.setBigContentTitle("MarkMe");

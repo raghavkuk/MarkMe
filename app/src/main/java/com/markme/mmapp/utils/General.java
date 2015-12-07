@@ -14,9 +14,6 @@ import com.markme.mmapp.db.DatabaseAPI;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/**
- * Created by raghav on 23/10/15.
- */
 public class General {
 
     public static void initializeAlarms(Context context) {
