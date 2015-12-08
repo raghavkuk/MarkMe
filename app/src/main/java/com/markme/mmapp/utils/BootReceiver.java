@@ -1,5 +1,6 @@
 package com.markme.mmapp.utils;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -52,6 +53,7 @@ public class BootReceiver extends BroadcastReceiver {
             mBuilder.setContentIntent(PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT));
 
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            mBuilder.setDefaults(Notification.DEFAULT_ALL);
             mNotificationManager.notify(0, mBuilder.build());
         }
 
@@ -84,6 +86,7 @@ public class BootReceiver extends BroadcastReceiver {
                 mBuilder.setColor(context.getResources().getColor(R.color.app_primary));
                 mBuilder.setSmallIcon(R.drawable.app_icon);
             }
+            mBuilder.setDefaults(Notification.DEFAULT_ALL);
             mNotificationManager.notify(1, mBuilder.build());
 
         }
